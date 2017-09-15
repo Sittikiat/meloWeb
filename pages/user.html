@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/angular/angular.js"></script>
+    <title>Users</title>
+</head>
+<body ng-app="user" ng-controller="userCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 align="center">Insert Users</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form ng-model="user">
+                    <div class="form-group">
+                        <label for="username_user">Username</label>
+                        <input type="text" id="username_user" name="username_user" ng-model="username_user" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password_user">Password</label>
+                        <input type="password" id="password_user" name="password_user" ng-model="password_user" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email_user">Email</label>
+                        <input type="email" id="email_user" name="email_user" ng-model="email_user" class="form-control" />
+                    </div>
+
+                    <button type="submit" ng-click="insertData()" class="btn btn-success">Insert</button>
+                    <button type="submit" ng-click="updateData()" class="btn btn-info">Edit</button>
+                </form>
+            </div>
+        </div>
+        <hr />
+        <div class="row" ng-init="selectData()">
+            <div class="col-md-12">
+                <h3>Table</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                    </tr>
+                    <tr ng-repeat="user in users">
+                        <td>{{ user.id_user }}</td>
+                        <td>{{ user.username_user }}</td>
+                        <td>{{ user.password_user }}</td>
+                        <td>{{ user.email_user }}</td>
+                        <td><button class="btn btn-info" ng-click="editData(user)">Edit</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div> 
+    </div>
+
+    <script src="./user.js"></script>
+
+</body>
+</html>
