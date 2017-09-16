@@ -84,4 +84,15 @@ app.controller("userCtrl", ($scope, $http) => {
                 alert("Error");
             });
     }
+
+    $scope.delData = function(id) {
+        $http.delete(`http://localhost:3000/deluser/${id}`)
+        .then((value) => {
+            if (value) console.log("Delete Success");
+            $scope.selectData();
+        })
+        .catch(() => {
+            alert("Error");
+        });
+    }
 });
