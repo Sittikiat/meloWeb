@@ -2,43 +2,44 @@ let app = angular.module("user", ['naif.base64']);
 
 app.controller("userCtrl", ($scope, $http) => {
 
-    
     $scope.insertData = function() {
+        let image = $scope.image_user;
+        console.log(image.base64);
 
-        // check
-        if ($scope.username_user == null) {
-            alert("Require Username");
-            return false;
-        }
-        if ($scope.password_user == null) {
-            alert("Require Password");
-            return false;
-        }
-        if ($scope.email_user == null) {
-            alert("Require Email");
-            return false;
-        }
+        // // check
+        // if ($scope.username_user == null) {
+        //     alert("Require Username");
+        //     return false;
+        // }
+        // if ($scope.password_user == null) {
+        //     alert("Require Password");
+        //     return false;
+        // }
+        // if ($scope.email_user == null) {
+        //     alert("Require Email");
+        //     return false;
+        // }
 
-        let data = {
-            "username": $scope.username_user,
-            "password": $scope.password_user,
-            "email": $scope.email_user,
-            "image": $scope.image_user
-        }
+        // let data = {
+        //     "username": $scope.username_user,
+        //     "password": $scope.password_user,
+        //     "email": $scope.email_user,
+        //     "image": $scope.image_user
+        // }
 
-        $http.post("http://localhost:3000/newuser", data)
-            .then((value) => {
-                if (value) console.log("Insert Success"); 
-                // clear value
-                $scope.username_user = null;
-                $scope.password_user = null;
-                $scope.email_user = null;
+        // $http.post("http://localhost:3000/newuser", data)
+        //     .then((value) => {
+        //         if (value) console.log("Insert Success"); 
+        //         // clear value
+        //         $scope.username_user = null;
+        //         $scope.password_user = null;
+        //         $scope.email_user = null;
 
-                $scope.selectData();
-            })
-            .catch(() => {
-                alert("Error");
-            });
+        //         $scope.selectData();
+        //     })
+        //     .catch(() => {
+        //         alert("Error");
+        //     });
     };
 
     $scope.selectData = function() {
