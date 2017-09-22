@@ -9,21 +9,27 @@
     <script src="../node_modules/angular/angular.js"></script>
     <title>Users</title>
 </head>
-<body>
+<body ng-app="restaurantModule" ng-controller="restaurantCtrl">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3>Upload</h3>
+                <h3>Insert Restaurant</h3>
+                <hr />
             </div>
         </div>
         <div class="row">
+            <!-- <div ng-controller="userCtrl">
+                {{ username }}
+            </div> -->
             <form enctype="multipart/form-data">
-                <input type="file" class="form-control" />
+                <input type="file" name="image_user" id="image_user" class="form-control" onchange="angular.element(this).scope().fileNameChanged()"  />
                 <br />
                 <button class="btn btn-info" type="submit">Upload</button>
             </form>
         </div>
     </div>
+
+    <script src="./restaurant.js"></script>
     
 </body>
 </html>

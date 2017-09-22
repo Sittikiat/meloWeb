@@ -8,18 +8,27 @@
     <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css">
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-base64-upload/dist/angular-base64-upload.js"></script>    
     <title>Users</title>
 </head>
 <body ng-app="user" ng-controller="userCtrl">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h3 align="center">Insert Users</h3>
+            <div class="col-md-8">
+                <h3>Insert Users</h3>
+            </div>
+            <div class="col-md-4">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label><i class="fa fa-search" aria-hidden="true"></i></label>
+                        <input class="form-control mx-sm-3" ng-model="search" type="text" placeholder="search" />
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <form ng-model="user">
+                <form enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="username_user">Username</label>
                         <input type="text" id="username_user" name="username_user" ng-model="username_user" class="form-control" />
@@ -32,34 +41,49 @@
                         <label for="email_user">Email</label>
                         <input type="email" id="email_user" name="email_user" ng-model="email_user" class="form-control" />
                     </div>
-
+                    <div class="form-group">
+                        <label for="image_user">Image</label>
+                        <input type="file" id="image_user" name="image_user" ng-model="image_user" class="form-control" base-sixty-four-input />
+                    </div>
                     <button type="submit" ng-click="insertData()" class="btn btn-success">Insert</button>
                     <button type="submit" ng-click="updateData()" class="btn btn-info">Edit</button>
                 </form>
             </div>
         </div>
         <hr />
-        <div class="row" ng-init="selectData()">
+        <div class="row" ng-init="selectData(); listStatus=false;">
             <div class="col-md-12">
-                <h3>List</h3>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>#</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Email</th>
-                        <th><i class="fa fa-pencil" aria-hidden="true"></i></th>
-                        <th><i class="fa fa-trash-o" aria-hidden="true"></th>
-                    </tr>
-                    <tr ng-repeat="user in users">
-                        <td>{{ user.id_user }}</td>
-                        <td>{{ user.username_user }}</td>
-                        <td>{{ user.password_user }}</td>
-                        <td>{{ user.email_user }}</td>
-                        <td><button class="btn btn-info" ng-click="editData(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                        <td><button class="btn btn-danger" ng-click="delData(user.id_user)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-                    </tr>
-                </table>
+                <button ng-click="listStatus=!listStatus;" class="btn">List <i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                <div ng-show="listStatus">
+                    <p align="right">
+                        <input type="radio" value="username_user" ng-model="sortUsername" /> A - Z | <!-- ASC -->
+                        <input type="radio" value="-username_user" ng-model="sortUsername" /> Z - A <!-- DESC -->
+                    </p>
+                    <table class="table table-hover table-responsive">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Email</th>
+                                <th>Image</th>
+                                <th><i class="fa fa-pencil" aria-hidden="true"></i></th>
+                                <th><i class="fa fa-trash-o" aria-hidden="true"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users | filter: {'username_user': search} | orderBy: sortUsername">
+                                <th>{{ user.id_user }}</th>
+                                <td>{{ user.username_user }}</td>
+                                <td>{{ user.password_user }}</td>
+                                <td>{{ user.email_user }}</td>
+                                <td>{{ user.image_user }}</td>
+                                <td><button class="btn btn-info" ng-click="editData(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                                <td><button class="btn btn-danger" ng-click="delData(user.id_user)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div> 
     </div>
