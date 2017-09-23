@@ -1,4 +1,5 @@
 let app = angular.module("user", ['naif.base64']);
+let url = "http://localhost:3000";
 
 app.controller("userCtrl", ($scope, $http) => {
     
@@ -25,7 +26,7 @@ app.controller("userCtrl", ($scope, $http) => {
             "image": $scope.image_user
         }
 
-        $http.post("http://localhost:3000/newuser", data)
+        $http.post(`${url}/newuser`, data)
             .then((value) => {
                 if (value) console.log("Insert Success"); 
                 // clear value
@@ -41,7 +42,7 @@ app.controller("userCtrl", ($scope, $http) => {
     };
 
     $scope.selectData = function() {
-        $http.get("http://localhost:3000/user")
+        $http.get(`${url}/user`)
             .then((value) => {
                 $scope.users = value.data;
             })
@@ -78,7 +79,7 @@ app.controller("userCtrl", ($scope, $http) => {
             "email": $scope.email_user
         }
 
-        $http.put("http://localhost:3000/edituser", data)
+        $http.put(`${url}/edituser`, data)
             .then((value) => {
                 if (value) console.log("Edit Success");
                 $scope.username_user = null;
@@ -92,7 +93,7 @@ app.controller("userCtrl", ($scope, $http) => {
     }
 
     $scope.delData = function(id) {
-        $http.delete(`http://localhost:3000/deluser/${id}`)
+        $http.delete(`${url}/deluser/${id}`)
         .then((value) => {
             if (value) console.log("Delete Success");
             $scope.selectData();
