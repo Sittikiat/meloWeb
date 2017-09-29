@@ -1,4 +1,5 @@
 let app = angular.module("user", ['naif.base64']);
+
 let url = "http://localhost:3000";
 
 app.controller("userCtrl", ($scope, $http) => {
@@ -19,6 +20,11 @@ app.controller("userCtrl", ($scope, $http) => {
             return false;
         }
 
+        if ($scope.image_user == null) {
+            alert("Require Image");
+            return false;
+        }
+
         let data = {
             "username": $scope.username_user,
             "password": $scope.password_user,
@@ -29,12 +35,7 @@ app.controller("userCtrl", ($scope, $http) => {
         $http.post(`${url}/newuser`, data)
             .then((value) => {
                 if (value) console.log("Insert Success"); 
-                // clear value
-                $scope.username_user = null;
-                $scope.password_user = null;
-                $scope.email_user = null;
-
-                $scope.selectData();
+                location.reload();
             })
             .catch(() => {
                 alert("Error");
@@ -82,9 +83,6 @@ app.controller("userCtrl", ($scope, $http) => {
         $http.put(`${url}/edituser`, data)
             .then((value) => {
                 if (value) console.log("Edit Success");
-                $scope.username_user = null;
-                $scope.password_user = null;
-                $scope.email_user = null;
                 $scope.selectData();
             })
             .catch(() => {

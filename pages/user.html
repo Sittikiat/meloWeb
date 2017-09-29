@@ -9,6 +9,7 @@
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-base64-upload/dist/angular-base64-upload.js"></script>    
+    <script src="./user.js"></script>
     <title>Users</title>
 </head>
 <body ng-app="user" ng-controller="userCtrl">
@@ -43,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label for="image_user">Image</label>
-                        <input type="file" id="image_user" name="image_user" ng-model="image_user" class="form-control" base-sixty-four-input />
+                        <input type="file" id="image_user" name="image_user" ng-model="image_user" class="form-control" base-sixty-four-input accept="image/*" required />
                     </div>
                     <button type="submit" ng-click="insertData()" class="btn btn-success">Insert</button>
                     <button type="submit" ng-click="updateData()" class="btn btn-info">Edit</button>
@@ -53,7 +54,7 @@
         <hr />
         <div class="row" ng-init="selectData(); listStatus=false;">
             <div class="col-md-12">
-                <button ng-click="listStatus=!listStatus;" class="btn">List <i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                <button ng-click="listStatus=!listStatus;" class="btn btn-default">List <i class="fa fa-caret-down" aria-hidden="true"></i></button>
                 <div ng-show="listStatus">
                     <p align="right">
                         <input type="radio" value="username_user" ng-model="sortUsername" /> A - Z | <!-- ASC -->
@@ -77,7 +78,7 @@
                                 <td>{{ user.username_user }}</td>
                                 <td>{{ user.password_user }}</td>
                                 <td>{{ user.email_user }}</td>
-                                <td><img ng-src="{{ user.image_user }}" alt="{{ user.image_user }}" /></td>
+                                <td><img ng-src="/Applications/MAMP/htdocs/meloWebService_dev/images/{{ user.image_user }}" alt="image" width="60px" height="60px" /></td>
                                 <td><button class="btn btn-info" ng-click="editData(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                 <td><button class="btn btn-danger" ng-click="delData(user.id_user)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                             </tr>
@@ -87,8 +88,6 @@
             </div>
         </div> 
     </div>
-
-    <script src="./user.js"></script>
 
 </body>
 </html>

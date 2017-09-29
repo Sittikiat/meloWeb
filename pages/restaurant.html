@@ -7,29 +7,122 @@
     <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css">
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
-    <title>Users</title>
+    <script src="../node_modules/angular-base64-upload/dist/angular-base64-upload.js"></script>
+    <script src="./restaurant.js"></script>
+    <title>Restaurant</title>
 </head>
-<body ng-app="restaurantModule" ng-controller="restaurantCtrl">
+<body ng-app="restaurantModule" ng-controller="restaurantCtrl" ng-init="selectData()">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Insert Restaurant</h3>
-                <hr />
+    <div class="row">
+            <div class="col-md-8">
+                <h3>Insert Users</h3>
+            </div>
+            <div class="col-md-4">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label><i class="fa fa-search" aria-hidden="true"></i></label>
+                        <input class="form-control mx-sm-3" ng-model="search" type="text" placeholder="search" />
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
-            <!-- <div ng-controller="userCtrl">
-                {{ username }}
-            </div> -->
-            <form enctype="multipart/form-data">
-                <input type="file" name="image_user" id="image_user" class="form-control" onchange="angular.element(this).scope().fileNameChanged()"  />
-                <br />
-                <button class="btn btn-info" type="submit">Upload</button>
-            </form>
+            <div class="col-md-12">
+                <form enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="name_restaurant">Name</label>
+                        <input class="form-control" type="text" id="name_restaurant" name="name_restaurant" ng-model="name_restaurant" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment_restaurant">Comment</label>
+                        <input class="form-control" type="text" id="comment_restaurant" name="comment_restaurant" ng-model="comment_restaurant" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rate_restaurant">Rate</label>
+                        <input class="form-control" type="number" id="rate_restaurant" name="rate_restaurant" ng-model="rate_restaurant" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address_restaurant">Address</label>
+                        <input class="form-control" type="text" id="address_restaurant" name="address_restaurant" ng-model="address_restaurant" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image_restaurant">Image</label>
+                        <input class="form-control" type="file" id="image_restaurant" name="image_restaurant" ng-model="image_restaurant" base-sixty-four-input accept="image/*" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_restaurant_category">Category Restaurant</label>
+                        <select name="id_restaurant_category" id="id_restaurant_category" class="form-control" ng-model="id_restaurant_category">
+                            <option value="">Select Category Restaurant</option>
+                            <option ng-repeat="category in categorys" value="{{ category.id_restaurant_category }}">{{ category.name_restaurant_category }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_menu">Menu Restaurant</label>
+                        <select name="id_menu" id="id_menu" class="form-control" ng-model="id_menu">
+                            <option value="">Select Menu</option>
+                            <option ng-repeat="menu in menus" value="{{ menu.id_menu }}">{{ menu.name_menu }}</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" ng-click="insertData()">Insert</button>
+
+                </form>
+            </div>
+        </div>
+        <div class="row" ng-init="listStatus=false; selectData();">
+            <div class="col-md-12">
+                <button ng-click="listStatus=!listStatus;" class="btn btn-defaulat">List <i class="fa fa-caret-down" aria-hidden="true"></i></button>
+            </div>
+            <div class="col-md-12">
+                <div ng-show=listStatus>
+                    <p align="right">
+                        <input type="radio" value="-id_restaurant" ng-model="sortRestaurant" /> UPDATE ! |
+                        <input type="radio" value="name_restaurant" ng-model="sortRestaurant" /> A - Z | <!-- ASC -->
+                        <input type="radio" value="-name_restaurant" ng-model="sortRestaurant" /> Z - A <!-- DESC -->
+                    </p>
+                    <table class="table table-hover table-responsive">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Comment</th>
+                                <th>Rate</th>
+                                <th>Address</th>
+                                <th>Image</th>
+                                <th>Category Restaurant</th>
+                                <th>Menu Restaurant</th>
+                                <th><i class="fa fa-pencil" aria-hidden="true"></i></th>
+                                <th><i class="fa fa-trash-o" aria-hidden="true"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="restaurant in restaurants | filter: {'name_restaurant': search} | orderBy: sortRestaurant">
+                                <th>{{ restaurant.id_restaurant }}</th>
+                                <td>{{ restaurant.name_restaurant }}</td>
+                                <td><textarea>{{ restaurant.comment_restaurant }}</textarea></td>
+                                <td>{{ restaurant.rate_restaurant }}</td>
+                                <td><textarea>{{ restaurant.address_restaurant }}</textarea></td>
+                                <td><img ng-src="/Applications/MAMP/htdocs/meloWebService_dev/images/{{ restaurant.img_restaurant }}" alt="image" width="60px" height="60px" /></td>
+                                <td>{{ restaurant.id_restaurant_category }}</td>
+                                <td>{{ restaurant.id_menu }}</td>
+                                <td><button disabled class="btn btn-info" ng-click="editData(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                                <td><button class="btn btn-danger" ng-click="delData(restaurant.id_restaurant)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="./restaurant.js"></script>
+    
     
 </body>
 </html>

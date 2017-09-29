@@ -1,18 +1,72 @@
-angular.module("restaurantModule", ["userModule"]); // setter
+angular.module("restaurantModule", ['naif.base64']); // setter
 let restaurant = angular.module("restaurantModule"); // getter
+let url = "http://localhost:3000";
 
-restaurant.controller("restaurantCtrl", ($scope) => {
-    $scope.fileNameChanged = function() {
-        let input = document.getElementById("image_user");
-        let file = input.value.split("\\");
-        let fileName = file[file.length - 1];
-        console.log(fileName);
+restaurant.controller("restaurantCtrl", ($scope, $http) => {
+    $scope.selectData = function() {
+        $http.get(`${url}/restaurant_category`)
+            .then((value) => {
+                $scope.categorys = value.data;
+            })
+            .catch(() => {
+                alert("Error");
+            });
+        $http.get(`${url}/menu`)
+            .then((value) => {
+                $scope.menus = value.data;
+            })
+            .catch(() => {
+                alert("Error");
+            })
+        $http.get(`${url}/restaurant`)
+            .then((value) => {
+                $scope.restaurants = value.data;
+            })
+            .catch(() => {
+                console.log("select restaurant fail");
+            })
     }
-});
 
-angular.module("userModule", []);
-let user = angular.module("userModule");
+    $scope.insertData = function() {
 
-user.controller("userCtrl", ($scope) => {
-    $scope.username = "mike";
+        let data = {
+            "name": $scope.name_restaurant,
+            "comment": $scope.comment_restaurant,
+            "rate": $scope.rate_restaurant,
+            "address": $scope.address_restaurant,
+            "image": $scope.image_restaurant,
+            "category": $scope.id_restaurant_category,
+            "menu": $scope.id_menu
+        }
+
+        $http.post(`${url}/newrestaurant`, data)
+            .then((value) => {
+                if (value) console.log("insert restaurant success");
+            })
+            .catch(() => {
+                console.log("insert restaurant fail");
+            });
+        
+        location.reload();
+
+    }
+
+    $scope.delData = function(id) {
+        let check = confirm("Delete ?");
+        if (check) {
+            $http.delete(`${url}/delrestaurant/${id}`)
+            .then((value) => {
+                if (value) console.log("Delete Success");
+                $scope.selectData();
+            })
+            .catch(() => {
+                alert("Error");
+            });
+        }
+    }
+
+
+
+
+
 });
