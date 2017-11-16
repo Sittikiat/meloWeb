@@ -1,6 +1,6 @@
 angular.module("restaurantModule", ['naif.base64']); // setter
 let restaurant = angular.module("restaurantModule"); // getter
-let url = "http://localhost:3000";
+let url = "http://sittikiat.streetfood.in.th:4444";
 
 restaurant.controller("restaurantCtrl", ($scope, $http) => {
     $scope.selectData = function() {
@@ -41,13 +41,12 @@ restaurant.controller("restaurantCtrl", ($scope, $http) => {
 
         $http.post(`${url}/newrestaurant`, data)
             .then((value) => {
-                if (value) console.log("insert restaurant success");
+                if (value) alert("insert restaurant success");
             })
             .catch(() => {
-                console.log("insert restaurant fail");
+                alert("insert restaurant fail");
             });
         
-        location.reload();
 
     }
 

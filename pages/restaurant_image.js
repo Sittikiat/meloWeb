@@ -1,6 +1,6 @@
 let app = angular.module("restaurantImageModule", ['naif.base64']);
 app.controller("restaurantImageCtrl", ($scope, $http) => {
-    let url = "http://localhost:3000";
+    let url = "http://sittikiat.streetfood.in.th:4444";
     $scope.selectData = function() {
         $http.get(`${url}/restaurant`).then((value) => {
             $scope.restaurants = value.data;

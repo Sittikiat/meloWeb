@@ -1,6 +1,6 @@
 let app = angular.module("user", ['naif.base64']);
 
-let url = "http://localhost:3000";
+let url = "http://sittikiat.streetfood.in.th:4444";
 
 app.controller("userCtrl", ($scope, $http) => {
     

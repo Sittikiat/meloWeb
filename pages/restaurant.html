@@ -103,13 +103,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="restaurant in restaurants | filter: {'name_restaurant': search} | orderBy: sortRestaurant">
+                            <tr ng-repeat="restaurant in restaurants | filter: {'name_restaurant' : search} | filter: {'address_restaurant' : search}  | orderBy: sortRestaurant">
                                 <th>{{ restaurant.id_restaurant }}</th>
                                 <td>{{ restaurant.name_restaurant }}</td>
                                 <td><textarea>{{ restaurant.comment_restaurant }}</textarea></td>
                                 <td>{{ restaurant.rate_restaurant }}</td>
                                 <td><textarea>{{ restaurant.address_restaurant }}</textarea></td>
-                                <td><img ng-src="/Applications/MAMP/htdocs/meloWebService_dev/images/{{ restaurant.img_restaurant }}" alt="image" width="60px" height="60px" /></td>
+                                <td><img ng-src="http://sittikiat.streetfood.in.th/images/{{ restaurant.img_restaurant }}" alt="image" width="60px" height="60px" /></td>
                                 <td>{{ restaurant.id_restaurant_category }}</td>
                                 <td>{{ restaurant.id_menu }}</td>
                                 <td><button disabled class="btn btn-info" ng-click="editData(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
